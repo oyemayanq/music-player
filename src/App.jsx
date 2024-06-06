@@ -143,7 +143,7 @@ export default function App() {
           </Grid>
           <Grid item xs={9}>
             <Main
-              musicListToShow={musicListToShow}
+              musicList={musicListToShow}
               activeTab={activeTab}
               setActiveTab={setActiveTab}
             />

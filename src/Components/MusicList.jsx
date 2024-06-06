@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import MusicItem from "./MusicItem";
 
 export default function MusicList({
@@ -8,9 +8,9 @@ export default function MusicList({
 }) {
   return (
     <Box>
-      <Box>
-        {musicListToShow?.length > 0 &&
-          musicListToShow?.map((music, index) => {
+      {musicListToShow?.length > 0 ? (
+        <Box>
+          {musicListToShow?.map((music, index) => {
             return (
               <Box key={music?.id || index} sx={{ marginBottom: "16px" }}>
                 <MusicItem
@@ -21,7 +21,12 @@ export default function MusicList({
               </Box>
             );
           })}
-      </Box>
+        </Box>
+      ) : (
+        <Box>
+          <Typography sx={{ textAlign: "center" }}>No Music found</Typography>
+        </Box>
+      )}
     </Box>
   );
 }

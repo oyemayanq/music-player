@@ -1,14 +1,38 @@
 import { useState } from "react";
 
-import { Box, Button, Grid, InputBase, Paper, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Grid,
+  IconButton,
+  InputBase,
+  Paper,
+  Typography,
+} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+
 import MusicList from "./MusicList";
 import Player from "./Player";
 
-export default function Main({ musicListToShow, activeTab, setActiveTab }) {
-  const [selectedMusic, setSelectedMusic] = useState(
-    musicListToShow?.[0] || null
-  );
+export default function Main({ musicList, activeTab, setActiveTab }) {
+  const [selectedMusic, setSelectedMusic] = useState(musicList?.[0] || null);
+  const [searchKeyword, setSearchKeyword] = useState("");
+
+  let musicListToShow = musicList;
+  if (searchKeyword?.length > 0) {
+    musicListToShow = musicList?.filter((music) => {
+      const name = music?.name?.toLowerCase() || "";
+      const artist = music?.artist?.toLowerCase() || "";
+      const lowerCaseSearchKeyword = searchKeyword?.toLowerCase();
+
+      return (
+        name?.includes(lowerCaseSearchKeyword) ||
+        artist?.includes(lowerCaseSearchKeyword)
+      );
+    });
+  }
+
   const selectedMusicIndex = musicListToShow?.findIndex(
     (music) => music?.id === selectedMusic?.id
   );
@@ -96,15 +120,30 @@ export default function Main({ musicListToShow, activeTab, setActiveTab }) {
                 color: "#fff",
               }}
               placeholder="Search Song, Artist"
+              value={searchKeyword}
+              onChange={(e) => setSearchKeyword(e.target.value)}
             />
-            <SearchIcon sx={{ fontSize: "28px", color: "grey" }} />
+            {searchKeyword?.length > 0 ? (
+              <IconButton
+                sx={{
+                  backgroundColor: "#333",
+                  "&:hover": { backgroundColor: "#555" },
+                }}
+                onClick={() => setSearchKeyword("")}
+              >
+                <CloseRoundedIcon sx={{ fontSize: "18px", color: "#fff" }} />
+              </IconButton>
+            ) : (
+              <SearchIcon sx={{ fontSize: "28px", color: "grey" }} />
+            )}
           </Paper>
 
           <Box
             sx={{
               width: "80%",
-              maxHeight: "calc(100vh - 200px)",
+              maxHeight: "calc(100vh - 210px)",
               overflowY: "scroll",
+              paddingRight: "16px",
               paddingBottom: "100px",
             }}
           >
