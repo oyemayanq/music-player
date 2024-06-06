@@ -1,5 +1,23 @@
-import { Box } from "@mui/material";
+import { Avatar, Box } from "@mui/material";
 
 export default function Sidebar() {
-  return <Box sx={{ border: "1px solid red", height: "100vh" }}>Sidebar</Box>;
+  return (
+    <Box
+      sx={{
+        padding: "24px 0px 16px 24px",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        height: "100vh",
+      }}
+    >
+      <Box>
+        <img src="/spotify.svg" style={{ width: "100px" }} />
+      </Box>
+
+      <Box>
+        <Avatar src="./avatar.png" />
+      </Box>
+    </Box>
+  );
 }
