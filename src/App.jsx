@@ -39,6 +39,9 @@ export default function App() {
         sx={{
           maxHeight: "100vh",
           backgroundColor: "#000",
+          backgroundImage: `radial-gradient(circle, ${
+            selectedMusic?.accent?.length > 0 ? selectedMusic?.accent : "#000"
+          }, #000000)`,
           color: "#fff",
         }}
       >

@@ -111,7 +111,7 @@ export default function Main({
               display: "flex",
               alignItems: "center",
               width: "80%",
-              background: "rgba(42,32,32,0.5)",
+              background: "rgba(255,255,255,0.1)",
               borderRadius: "10px",
               boxShadow: "0 4px 30px rgba(0,0,0,0.1)",
               backdropFilter: "blur(18px)",
