@@ -4,7 +4,7 @@ export default function Sidebar() {
   return (
     <Box
       sx={{
-        padding: "24px 0px 16px 24px",
+        padding: "32px 0px 32px 24px",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
