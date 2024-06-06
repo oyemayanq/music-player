@@ -7,15 +7,15 @@ import Sidebar from "./Components/Sidebar";
 export default function App() {
   return (
     <main>
-      <Box sx={{ backgroundColor: "#000", color: "#fff" }}>
+      <Box sx={{ maxHeight: "100vh", backgroundColor: "#000", color: "#fff" }}>
         <Grid container>
           <Grid item xs={3}>
             <Sidebar />
           </Grid>
-          <Grid item xs={5}>
+          <Grid item xs={4}>
             <MusicList />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={5}>
             <Player />
           </Grid>
         </Grid>
