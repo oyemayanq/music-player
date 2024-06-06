@@ -4,7 +4,7 @@ import MusicItem from "./MusicItem";
 
 export default function MusicList() {
   return (
-    <Box sx={{ height: "100vh", overflowY: "scroll", padding: "24px 0px" }}>
+    <Box sx={{ maxHeight: "100vh", padding: "24px 0px" }}>
       <Box
         sx={{
           display: "flex",
@@ -69,7 +69,14 @@ export default function MusicList() {
         <SearchIcon sx={{ fontSize: "28px", color: "grey" }} />
       </Paper>
 
-      <Box sx={{ width: "80%" }}>
+      <Box
+        sx={{
+          width: "80%",
+          maxHeight: "calc(100vh - 200px)",
+          overflowY: "scroll",
+          paddingBottom: "300px",
+        }}
+      >
         <Box sx={{ marginBottom: "8px" }}>
           <MusicItem />
         </Box>
