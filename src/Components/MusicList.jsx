@@ -1,8 +1,26 @@
+import { useState } from "react";
+
 import { Box, Button, InputBase, Paper, Typography } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import MusicItem from "./MusicItem";
 
-export default function MusicList() {
+export default function MusicList({
+  musicList,
+  selectedMusic,
+  setSelectedMusic,
+}) {
+  const [currentTab, setCurrentTab] = useState("for_you");
+
+  let musicListToShow = musicList || [];
+
+  if (currentTab === "top_tracks") {
+    if (musicList?.length > 0) {
+      musicListToShow = musicList?.filter(
+        (music) => music?.["top_track"] === true
+      );
+    }
+  }
+
   return (
     <Box sx={{ maxHeight: "100vh", padding: "24px 0px" }}>
       <Box
@@ -13,7 +31,7 @@ export default function MusicList() {
           marginBottom: "16px",
         }}
       >
-        <Button variant="text">
+        <Button variant="text" onClick={() => setCurrentTab("for_you")}>
           <Typography
             variant="subtitle1"
             component="span"
@@ -21,13 +39,13 @@ export default function MusicList() {
               fontWeight: "700",
               fontSize: "24px",
               textTransform: "capitalize",
-              color: "#fff",
+              color: currentTab === "for_you" ? "#fff" : "#555",
             }}
           >
             For You
           </Typography>
         </Button>
-        <Button variant="text">
+        <Button variant="text" onClick={() => setCurrentTab("top_tracks")}>
           <Typography
             variant="subtitle1"
             component="span"
@@ -35,7 +53,7 @@ export default function MusicList() {
               fontWeight: "700",
               fontSize: "24px",
               textTransform: "capitalize",
-              color: "#fff",
+              color: currentTab === "top_tracks" ? "#fff" : "#555",
             }}
           >
             Top Tracks
@@ -74,39 +92,21 @@ export default function MusicList() {
           width: "80%",
           maxHeight: "calc(100vh - 200px)",
           overflowY: "scroll",
-          paddingBottom: "300px",
+          paddingBottom: "100px",
         }}
       >
-        <Box sx={{ marginBottom: "8px" }}>
-          <MusicItem />
-        </Box>
-        <Box sx={{ marginBottom: "8px" }}>
-          <MusicItem />
-        </Box>
-        <Box sx={{ marginBottom: "8px" }}>
-          <MusicItem />
-        </Box>
-        <Box sx={{ marginBottom: "8px" }}>
-          <MusicItem />
-        </Box>
-        <Box sx={{ marginBottom: "8px" }}>
-          <MusicItem />
-        </Box>
-        <Box sx={{ marginBottom: "8px" }}>
-          <MusicItem />
-        </Box>
-        <Box sx={{ marginBottom: "8px" }}>
-          <MusicItem />
-        </Box>
-        <Box sx={{ marginBottom: "8px" }}>
-          <MusicItem />
-        </Box>
-        <Box sx={{ marginBottom: "8px" }}>
-          <MusicItem />
-        </Box>
-        <Box sx={{ marginBottom: "8px" }}>
-          <MusicItem />
-        </Box>
+        {musicListToShow?.length > 0 &&
+          musicListToShow?.map((music, index) => {
+            return (
+              <Box key={music?.id || index} sx={{ marginBottom: "16px" }}>
+                <MusicItem
+                  music={music}
+                  selected={selectedMusic?.id === music?.id}
+                  onSelect={(m) => setSelectedMusic(m)}
+                />
+              </Box>
+            );
+          })}
       </Box>
     </Box>
   );

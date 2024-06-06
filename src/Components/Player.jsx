@@ -1,7 +1,13 @@
 import { Box, Typography } from "@mui/material";
 import AudioPlayer from "./AudioPlayer";
 
-export default function Player() {
+export default function Player({
+  selectedMusic,
+  onPrevious,
+  onNext,
+  previousButtonDisabled,
+  nextButtonDisabled,
+}) {
   return (
     <Box sx={{ border: "0px solid red", height: "100vh" }}>
       {/* Menu */}
@@ -20,19 +26,19 @@ export default function Player() {
             component="h3"
             sx={{ fontSize: "32px", fontWeight: "700", lineHeight: 1 }}
           >
-            Music name
+            {selectedMusic?.name}
           </Typography>
           <Typography
             variant="subtitle1"
             component="p"
             sx={{ fontSize: "16px", color: "grey" }}
           >
-            Music Artist
+            {selectedMusic?.artist}
           </Typography>
         </Box>
 
         <img
-          src="https://cms.samespace.com/assets/4f718272-6b0e-42ee-92d0-805b783cb471"
+          src={`https://cms.samespace.com/assets/${selectedMusic?.cover}`}
           alt=""
           style={{
             width: "350px",
@@ -44,7 +50,13 @@ export default function Player() {
         />
 
         <Box sx={{ width: "350px" }}>
-          <AudioPlayer />
+          <AudioPlayer
+            src={selectedMusic?.url}
+            onNext={onNext}
+            onPrevious={onPrevious}
+            previousButtonDisabled={previousButtonDisabled}
+            nextButtonDisabled={nextButtonDisabled}
+          />
         </Box>
         {/* Controls */}
       </Box>

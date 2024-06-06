@@ -1,6 +1,6 @@
 import { Avatar, Box, Typography } from "@mui/material";
 
-export default function MusicItem() {
+export default function MusicItem({ music, selected, onSelect }) {
   return (
     <Box
       sx={{
@@ -8,14 +8,20 @@ export default function MusicItem() {
         display: "flex",
         alignItems: "center",
         gap: "8px",
-        background: "rgba(42,32,32,0.5)",
+        background: selected ? "rgba(42,32,32,0.5)" : "transparent",
         borderRadius: "10px",
         boxShadow: "0 4px 30px rgba(0,0,0,0.1)",
         backdropFilter: "blur(18px)",
         "-webkit-backdrop-filter": "blur(18px)",
+        cursor: "pointer",
       }}
+      onClick={() => onSelect(music)}
     >
-      <Avatar src="/avatar.png" alt="" sx={{ width: "48px", height: "48px" }} />
+      <Avatar
+        src={`https://cms.samespace.com/assets/${music?.cover}`}
+        alt=""
+        sx={{ width: "48px", height: "48px" }}
+      />
       <Box
         sx={{
           width: "100%",
@@ -30,14 +36,14 @@ export default function MusicItem() {
             component="h6"
             sx={{ fontSize: "16px" }}
           >
-            Starboy
+            {music?.name}
           </Typography>
           <Typography
             variant="subtitle2"
             component="span"
             sx={{ fontWeight: "400", color: "grey" }}
           >
-            The Weekend
+            {music?.artist}
           </Typography>
         </Box>
         <Typography

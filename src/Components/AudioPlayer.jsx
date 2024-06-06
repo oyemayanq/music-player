@@ -11,6 +11,7 @@ import VolumeUpRoundedIcon from "@mui/icons-material/VolumeUpRounded";
 import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
 
 export default function AudioPlayer({
+  src,
   autoPlay,
   onPlay,
   onPause,
@@ -62,7 +63,7 @@ export default function AudioPlayer({
 
   return (
     <Box>
-      <audio src="./a_beautiful_day.mp3" ref={audioRef} />
+      <audio src={src} ref={audioRef} />
       <Box sx={{ marginBottom: "8px" }}>
         <input
           type="range"
