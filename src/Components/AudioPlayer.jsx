@@ -96,7 +96,12 @@ export default function AudioPlayer({
         </Box>
         <Box>
           <IconButton onClick={onPrevious} disabled={previousButtonDisabled}>
-            <SkipPreviousRoundedIcon sx={{ fontSize: "32px", color: "#fff" }} />
+            <SkipPreviousRoundedIcon
+              sx={{
+                fontSize: "32px",
+                color: previousButtonDisabled ? "#555" : "#fff",
+              }}
+            />
           </IconButton>
           <IconButton onClick={togglePlayPause}>
             {isPlaying ? (
@@ -110,7 +115,12 @@ export default function AudioPlayer({
             )}
           </IconButton>
           <IconButton onClick={onNext} disabled={nextButtonDisabled}>
-            <SkipNextRoundedIcon sx={{ fontSize: "32px", color: "#fff" }} />
+            <SkipNextRoundedIcon
+              sx={{
+                fontSize: "32px",
+                color: nextButtonDisabled ? "#555" : "#fff",
+              }}
+            />
           </IconButton>
         </Box>
         <Box>

@@ -1,10 +1,8 @@
 import { useState } from "react";
 
 import { Box, Grid } from "@mui/material";
-
-import MusicList from "./Components/MusicList";
-import Player from "./Components/Player";
 import Sidebar from "./Components/Sidebar";
+import Main from "./Components/Main";
 
 const music = [
   {
@@ -130,28 +128,10 @@ const music = [
 ];
 
 export default function App() {
-  const [selectedMusic, setSelectedMusic] = useState(music[0]);
-  const currentSelectedMusicIndex = music?.findIndex(
-    (m) => m?.id === selectedMusic?.id
-  );
-
-  function handleNextClick() {
-    if (
-      currentSelectedMusicIndex === music?.length - 1 ||
-      currentSelectedMusicIndex === -1
-    ) {
-      return;
-    }
-
-    setSelectedMusic(music[currentSelectedMusicIndex + 1]);
-  }
-
-  function handlePreviousClick() {
-    if (currentSelectedMusicIndex === 0 || currentSelectedMusicIndex === -1) {
-      return;
-    }
-
-    setSelectedMusic(music[currentSelectedMusicIndex - 1]);
+  const [activeTab, setActiveTab] = useState("for_you");
+  let musicListToShow = music || [];
+  if (activeTab === "top_tracks") {
+    musicListToShow = music?.filter((m) => m?.["top_track"] === true);
   }
 
   return (
@@ -161,18 +141,11 @@ export default function App() {
           <Grid item xs={3}>
             <Sidebar />
           </Grid>
-          <Grid item xs={4}>
-            <MusicList
-              musicList={music}
-              selectedMusic={selectedMusic}
-              setSelectedMusic={setSelectedMusic}
-            />
-          </Grid>
-          <Grid item xs={5}>
-            <Player
-              selectedMusic={selectedMusic}
-              onNext={handleNextClick}
-              onPrevious={handlePreviousClick}
+          <Grid item xs={9}>
+            <Main
+              musicListToShow={musicListToShow}
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
             />
           </Grid>
         </Grid>
