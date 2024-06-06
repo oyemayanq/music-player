@@ -3,6 +3,7 @@ import { useState } from "react";
 import {
   Box,
   Button,
+  CircularProgress,
   Grid,
   IconButton,
   InputBase,
@@ -15,8 +16,14 @@ import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import MusicList from "./MusicList";
 import Player from "./Player";
 
-export default function Main({ musicList, activeTab, setActiveTab }) {
-  const [selectedMusic, setSelectedMusic] = useState(musicList?.[0] || null);
+export default function Main({
+  musicList,
+  activeTab,
+  setActiveTab,
+  loading,
+  selectedMusic,
+  setSelectedMusic,
+}) {
   const [searchKeyword, setSearchKeyword] = useState("");
 
   let musicListToShow = musicList;
@@ -109,7 +116,7 @@ export default function Main({ musicList, activeTab, setActiveTab }) {
               boxShadow: "0 4px 30px rgba(0,0,0,0.1)",
               backdropFilter: "blur(18px)",
               "-webkit-backdrop-filter": "blur(18px)",
-              marginBottom: "32px",
+              marginBottom: "48px",
             }}
           >
             <InputBase
@@ -141,30 +148,55 @@ export default function Main({ musicList, activeTab, setActiveTab }) {
           <Box
             sx={{
               width: "80%",
-              maxHeight: "calc(100vh - 210px)",
+              maxHeight: "calc(100vh - 230px)",
               overflowY: "scroll",
               paddingRight: "16px",
               paddingBottom: "100px",
             }}
           >
-            <MusicList
-              musicListToShow={musicListToShow}
-              selectedMusic={selectedMusic}
-              setSelectedMusic={setSelectedMusic}
-            />
+            {loading ? (
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  //border: "1px solid red",
+                }}
+              >
+                <CircularProgress />
+              </Box>
+            ) : (
+              <MusicList
+                musicListToShow={musicListToShow}
+                selectedMusic={selectedMusic}
+                setSelectedMusic={setSelectedMusic}
+              />
+            )}
           </Box>
         </Box>
       </Grid>
       <Grid item xs={6}>
-        <Player
-          selectedMusic={selectedMusic}
-          onNext={handleNextClick}
-          onPrevious={handlePreviousClick}
-          nextButtonDisabled={
-            selectedMusicIndex === musicListToShow?.length - 1
-          }
-          previousButtonDisabled={selectedMusicIndex === 0}
-        />
+        {loading ? (
+          <Box
+            sx={{
+              height: "100vh",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <CircularProgress />
+          </Box>
+        ) : (
+          <Player
+            selectedMusic={selectedMusic}
+            onNext={handleNextClick}
+            onPrevious={handlePreviousClick}
+            nextButtonDisabled={
+              selectedMusicIndex === musicListToShow?.length - 1
+            }
+            previousButtonDisabled={selectedMusicIndex === 0}
+          />
+        )}
       </Grid>
     </Grid>
   );
