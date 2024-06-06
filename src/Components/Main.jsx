@@ -65,7 +65,7 @@ export default function Main({
 
   return (
     <Grid container sx={{ maxHeight: "100vh" }}>
-      <Grid item xs={6}>
+      <Grid item xs={5}>
         <Box sx={{ padding: "24px 0px" }}>
           <Box
             sx={{
@@ -110,7 +110,7 @@ export default function Main({
               padding: "10px 16px",
               display: "flex",
               alignItems: "center",
-              width: "80%",
+              width: "100%",
               background: "rgba(255,255,255,0.1)",
               borderRadius: "10px",
               boxShadow: "0 4px 30px rgba(0,0,0,0.1)",
@@ -147,7 +147,7 @@ export default function Main({
 
           <Box
             sx={{
-              width: "80%",
+              width: "100%",
               maxHeight: "calc(100vh - 230px)",
               overflowY: "scroll",
               paddingRight: "16px",
@@ -174,7 +174,7 @@ export default function Main({
           </Box>
         </Box>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={7}>
         {loading ? (
           <Box
             sx={{
