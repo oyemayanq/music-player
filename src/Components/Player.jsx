@@ -11,6 +11,7 @@ export default function Player({
   previousButtonDisabled,
   nextButtonDisabled,
   onMenuClick,
+  autoPlay,
 }) {
   return (
     <Box sx={{ border: "0px solid red", height: "100vh" }}>
@@ -79,6 +80,7 @@ export default function Player({
           }}
         >
           <AudioPlayer
+            autoPlay={autoPlay}
             src={selectedMusic?.url}
             onNext={onNext}
             onPrevious={onPrevious}

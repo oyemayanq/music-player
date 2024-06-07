@@ -31,6 +31,7 @@ export default function Main({
 }) {
   const [searchKeyword, setSearchKeyword] = useState("");
   const [showMusicListMenu, setShowMusicListMenu] = useState(false);
+  const [isMusicClicked, setIsMusicClicked] = useState(false);
 
   let musicListToShow = musicList;
   if (searchKeyword?.length > 0) {
@@ -111,6 +112,7 @@ export default function Main({
             }
             previousButtonDisabled={selectedMusicIndex === 0}
             onMenuClick={() => setShowMusicListMenu(true)}
+            autoPlay={isMusicClicked}
           />
         )}
       </Grid>
@@ -137,7 +139,10 @@ export default function Main({
             searchKeyword={searchKeyword}
             setSearchKeyword={setSearchKeyword}
             selectedMusic={selectedMusic}
-            setSelectedMusic={setSelectedMusic}
+            setSelectedMusic={(m) => {
+              setSelectedMusic(m);
+              setIsMusicClicked(true);
+            }}
             onCloseMusicListMenu={() => setShowMusicListMenu(false)}
           />
         </DialogContent>

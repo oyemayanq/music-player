@@ -1,6 +1,6 @@
 import "../styles/custom-progress-bar.css";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 
 import { Box, IconButton } from "@mui/material";
 import PlayCircleFilledWhiteRoundedIcon from "@mui/icons-material/PlayCircleFilledWhiteRounded";
@@ -60,6 +60,12 @@ export default function AudioPlayer({
     }
     setIsPlaying(!isPlaying);
   }
+
+  useEffect(() => {
+    audioRef?.current?.play();
+    playAnimationRef.current = requestAnimationFrame(repeat);
+    setIsPlaying(true);
+  }, [src, repeat]);
 
   return (
     <Box>
