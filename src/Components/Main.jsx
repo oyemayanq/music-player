@@ -126,6 +126,7 @@ export default function Main({
             backgroundImage: `linear-gradient(to right bottom, ${
               selectedMusic?.accent?.length > 0 ? selectedMusic?.accent : "#000"
             }, #000000)`,
+            paddingLeft: "0",
           }}
         >
           <MusicListWrapper

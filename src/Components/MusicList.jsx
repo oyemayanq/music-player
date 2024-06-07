@@ -4,7 +4,7 @@ import MusicItem from "./MusicItem";
 export default function MusicList({
   musicListToShow,
   selectedMusic,
-  setSelectedMusic,
+  onSelect,
 }) {
   return (
     <Box>
@@ -16,7 +16,7 @@ export default function MusicList({
                 <MusicItem
                   music={music}
                   selected={selectedMusic?.id === music?.id}
-                  onSelect={(m) => setSelectedMusic(m)}
+                  onSelect={(m) => onSelect(m)}
                 />
               </Box>
             );

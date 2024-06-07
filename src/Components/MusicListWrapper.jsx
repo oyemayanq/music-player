@@ -29,6 +29,7 @@ export default function MusicListWrapper({
         sx={{
           padding: "24px 0px 24px 64px",
           "@media (max-width:800px)": { paddingLeft: "48px" },
+          "@media (max-width:600px)": { paddingLeft: "24px" },
         }}
       >
         <Box
@@ -77,6 +78,7 @@ export default function MusicListWrapper({
           </Box>
           <IconButton
             sx={{
+              backgroundColor: "#333",
               "&:hover": { backgroundColor: "#555" },
               "@media (min-width:600px)": { display: "none" },
             }}
@@ -149,7 +151,10 @@ export default function MusicListWrapper({
             <MusicList
               musicListToShow={musicListToShow}
               selectedMusic={selectedMusic}
-              setSelectedMusic={setSelectedMusic}
+              onSelect={(m) => {
+                setSelectedMusic(m);
+                onCloseMusicListMenu();
+              }}
             />
           )}
         </Box>
