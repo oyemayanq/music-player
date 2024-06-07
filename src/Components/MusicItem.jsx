@@ -30,7 +30,7 @@ export default function MusicItem({ music, selected, onSelect }) {
           justifyContent: "space-between",
         }}
       >
-        <Box>
+        <Box sx={{ color: "#fff" }}>
           <Typography
             variant="subtitle1"
             component="h6"

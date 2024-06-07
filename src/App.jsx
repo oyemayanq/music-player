@@ -39,17 +39,22 @@ export default function App() {
         sx={{
           maxHeight: "100vh",
           backgroundColor: "#000",
-          backgroundImage: `radial-gradient(circle, ${
+          backgroundImage: `linear-gradient(to right bottom, ${
             selectedMusic?.accent?.length > 0 ? selectedMusic?.accent : "#000"
           }, #000000)`,
           color: "#fff",
         }}
       >
         <Grid container>
-          <Grid item xs={3}>
+          <Grid
+            item
+            lg={2}
+            xl={3}
+            sx={{ "@media (max-width:1200px)": { display: "none" } }}
+          >
             <Sidebar />
           </Grid>
-          <Grid item xs={9}>
+          <Grid item xs={12} sm={12} md={12} lg={10} xl={9}>
             <Main
               musicList={musicListToShow}
               activeTab={activeTab}

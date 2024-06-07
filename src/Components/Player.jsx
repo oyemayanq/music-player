@@ -1,5 +1,8 @@
-import { Box, Typography } from "@mui/material";
+import classes from "./player.module.css";
+
+import { Box, IconButton, Typography } from "@mui/material";
 import AudioPlayer from "./AudioPlayer";
+import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 
 export default function Player({
   selectedMusic,
@@ -7,11 +10,30 @@ export default function Player({
   onNext,
   previousButtonDisabled,
   nextButtonDisabled,
+  onMenuClick,
 }) {
   return (
     <Box sx={{ border: "0px solid red", height: "100vh" }}>
       {/* Menu */}
-      <Box sx={{ padding: "32px 32px 0px 0px", marginBottom: "24px" }}></Box>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "flex-end",
+          padding: "32px 32px 0px 0px",
+          marginBottom: "24px",
+        }}
+      >
+        <IconButton
+          sx={{
+            backgroundColor: "#333",
+            "&:hover": { backgroundColor: "#555" },
+            "@media (min-width:600px)": { display: "none" },
+          }}
+          onClick={onMenuClick}
+        >
+          <MenuRoundedIcon sx={{ color: "#fff" }} />
+        </IconButton>
+      </Box>
       <Box
         sx={{
           paddingTop: "36px",
@@ -20,7 +42,13 @@ export default function Player({
           alignItems: "center",
         }}
       >
-        <Box sx={{ width: "350px", marginBottom: "32px" }}>
+        <Box
+          sx={{
+            width: "350px",
+            marginBottom: "32px",
+            "@media (max-width:750px)": { width: "300px" },
+          }}
+        >
           <Typography
             variant="subtitle1"
             component="h3"
@@ -40,16 +68,16 @@ export default function Player({
         <img
           src={`https://cms.samespace.com/assets/${selectedMusic?.cover}`}
           alt=""
-          style={{
-            width: "350px",
-            height: "350px",
-            borderRadius: "5px",
-            objectFit: "cover",
-            marginBottom: "16px",
-          }}
+          className={classes["player-image"]}
         />
 
-        <Box sx={{ width: "350px" }}>
+        <Box
+          sx={{
+            width: "350px",
+            marginBottom: "32px",
+            "@media (max-width:750px)": { width: "300px" },
+          }}
+        >
           <AudioPlayer
             src={selectedMusic?.url}
             onNext={onNext}
@@ -58,6 +86,7 @@ export default function Player({
             nextButtonDisabled={nextButtonDisabled}
           />
         </Box>
+
         {/* Controls */}
       </Box>
     </Box>
