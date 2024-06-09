@@ -134,7 +134,6 @@ export default function MusicListWrapper({
             maxHeight: "calc(100vh - 270px)",
             overflowY: "scroll",
             paddingRight: "16px",
-            paddingBottom: "100px",
           }}
         >
           {loading ? (
@@ -153,7 +152,9 @@ export default function MusicListWrapper({
               selectedMusic={selectedMusic}
               onSelect={(m) => {
                 setSelectedMusic(m);
-                onCloseMusicListMenu();
+                if (onCloseMusicListMenu) {
+                  onCloseMusicListMenu();
+                }
               }}
             />
           )}

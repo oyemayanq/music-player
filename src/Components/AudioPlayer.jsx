@@ -32,7 +32,7 @@ export default function AudioPlayer({
     const currentTime = audioRef?.current?.currentTime;
     const duration = audioRef?.current?.duration;
     progressBarRef.current.value = currentTime;
-    progressBarRef.current.style.setProperty(
+    progressBarRef?.current?.style?.setProperty(
       "--range-progress",
       `${(currentTime * 100) / duration}`
     );
@@ -41,13 +41,9 @@ export default function AudioPlayer({
   }, [audioRef, progressBarRef]);
 
   function handleProgressChange() {
-    console.log("progressBar", progressBarRef?.current?.value);
-    //console.log(audioRef?.current?.duration);
     const currentAudioTime =
       (audioRef?.current?.duration * progressBarRef?.current?.value) / 100;
-    console.log("currentAudioTime", currentAudioTime);
-    audioRef.current.currentTime =
-      (audioRef?.current?.duration * progressBarRef?.current?.value) / 100;
+    audioRef.current.currentTime = currentAudioTime / 100;
   }
 
   function togglePlayPause() {
@@ -84,7 +80,9 @@ export default function AudioPlayer({
         onEnded={() => {
           setIsPlaying(false);
           cancelAnimationFrame(playAnimationRef.current);
-          onEnd();
+          if (onEnd) {
+            onEnd();
+          }
         }}
       />
       <Box sx={{ marginBottom: "8px" }}>

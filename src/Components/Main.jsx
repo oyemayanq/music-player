@@ -2,16 +2,11 @@ import { useState, forwardRef } from "react";
 
 import {
   Box,
-  Button,
   CircularProgress,
   Dialog,
   DialogContent,
   Grid,
-  IconButton,
-  InputBase,
-  Paper,
   Slide,
-  Typography,
 } from "@mui/material";
 
 import Player from "./Player";
@@ -51,6 +46,11 @@ export default function Main({
     (music) => music?.id === selectedMusic?.id
   );
 
+  function handleMusicClick(m) {
+    setIsMusicClicked(true);
+    setSelectedMusic(m);
+  }
+
   function handleNextClick() {
     if (
       selectedMusicIndex === musicListToShow?.length - 1 ||
@@ -77,7 +77,9 @@ export default function Main({
         sm={6}
         md={5}
         lg={5}
-        sx={{ "@media (max-width:600px)": { display: "none" } }}
+        sx={{
+          "@media (max-width:600px)": { display: "none" },
+        }}
       >
         <MusicListWrapper
           activeTab={activeTab}
@@ -87,10 +89,7 @@ export default function Main({
           searchKeyword={searchKeyword}
           setSearchKeyword={setSearchKeyword}
           selectedMusic={selectedMusic}
-          setSelectedMusic={(m) => {
-            setIsMusicClicked(true);
-            setSelectedMusic(m);
-          }}
+          setSelectedMusic={handleMusicClick}
         />
       </Grid>
       <Grid item xs={12} sm={6} md={7} lg={7}>
