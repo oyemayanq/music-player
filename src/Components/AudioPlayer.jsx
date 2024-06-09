@@ -19,8 +19,9 @@ export default function AudioPlayer({
   onPrevious,
   previousButtonDisabled,
   nextButtonDisabled,
+  onEnd,
 }) {
-  const [isPlaying, setIsPlaying] = useState(autoPlay || false);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [showVolumeControl, setShowVolumeControl] = useState(false);
 
   const audioRef = useRef();
@@ -40,8 +41,13 @@ export default function AudioPlayer({
   }, [audioRef, progressBarRef]);
 
   function handleProgressChange() {
-    console.log(progressBarRef?.current?.value);
-    audioRef.current.currentTime = progressBarRef?.current?.value;
+    console.log("progressBar", progressBarRef?.current?.value);
+    //console.log(audioRef?.current?.duration);
+    const currentAudioTime =
+      (audioRef?.current?.duration * progressBarRef?.current?.value) / 100;
+    console.log("currentAudioTime", currentAudioTime);
+    audioRef.current.currentTime =
+      (audioRef?.current?.duration * progressBarRef?.current?.value) / 100;
   }
 
   function togglePlayPause() {
@@ -62,19 +68,31 @@ export default function AudioPlayer({
   }
 
   useEffect(() => {
-    audioRef?.current?.play();
-    playAnimationRef.current = requestAnimationFrame(repeat);
-    setIsPlaying(true);
-  }, [src, repeat]);
+    if (autoPlay) {
+      progressBarRef.current.max = audioRef?.current.duration;
+      audioRef?.current?.play();
+      playAnimationRef.current = requestAnimationFrame(repeat);
+      setIsPlaying(true);
+    }
+  }, [src, repeat, autoPlay]);
 
   return (
     <Box>
-      <audio src={src} ref={audioRef} />
+      <audio
+        src={src}
+        ref={audioRef}
+        onEnded={() => {
+          setIsPlaying(false);
+          cancelAnimationFrame(playAnimationRef.current);
+          onEnd();
+        }}
+      />
       <Box sx={{ marginBottom: "8px" }}>
         <input
           type="range"
           style={{ width: "100%" }}
           defaultValue="0"
+          max={100}
           ref={progressBarRef}
           onChange={handleProgressChange}
         />

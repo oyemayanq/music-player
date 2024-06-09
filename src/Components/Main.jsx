@@ -87,7 +87,10 @@ export default function Main({
           searchKeyword={searchKeyword}
           setSearchKeyword={setSearchKeyword}
           selectedMusic={selectedMusic}
-          setSelectedMusic={setSelectedMusic}
+          setSelectedMusic={(m) => {
+            setIsMusicClicked(true);
+            setSelectedMusic(m);
+          }}
         />
       </Grid>
       <Grid item xs={12} sm={6} md={7} lg={7}>
@@ -113,6 +116,7 @@ export default function Main({
             previousButtonDisabled={selectedMusicIndex === 0}
             onMenuClick={() => setShowMusicListMenu(true)}
             autoPlay={isMusicClicked}
+            onEnd={handleNextClick}
           />
         )}
       </Grid>

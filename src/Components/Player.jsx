@@ -12,6 +12,7 @@ export default function Player({
   nextButtonDisabled,
   onMenuClick,
   autoPlay,
+  onEnd,
 }) {
   return (
     <Box sx={{ border: "0px solid red", height: "100vh" }}>
@@ -86,6 +87,7 @@ export default function Player({
             onPrevious={onPrevious}
             previousButtonDisabled={previousButtonDisabled}
             nextButtonDisabled={nextButtonDisabled}
+            onEnd={onEnd}
           />
         </Box>
 
