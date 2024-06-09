@@ -84,6 +84,12 @@ export default function AudioPlayer({
             onEnd();
           }
         }}
+        onPause={() => {
+          setIsPlaying(false);
+          if (onPause) {
+            onPause();
+          }
+        }}
       />
       <Box sx={{ marginBottom: "8px" }}>
         <input
