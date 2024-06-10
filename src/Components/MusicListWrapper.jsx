@@ -131,7 +131,7 @@ export default function MusicListWrapper({
         <Box
           sx={{
             width: "100%",
-            maxHeight: "calc(100vh - 250px)",
+            maxHeight: "calc(100vh - 290px)",
             overflowY: "scroll",
             paddingRight: "16px",
           }}
