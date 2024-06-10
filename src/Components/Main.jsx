@@ -83,7 +83,10 @@ export default function Main({
       >
         <MusicListWrapper
           activeTab={activeTab}
-          setActiveTab={setActiveTab}
+          setActiveTab={(value) => {
+            setSearchKeyword("");
+            setActiveTab(value);
+          }}
           loading={loading}
           musicListToShow={musicListToShow}
           searchKeyword={searchKeyword}
