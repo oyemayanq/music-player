@@ -35,7 +35,7 @@ export default function AudioPlayer({
     progressBarRef.current.value = currentTime;
     progressBarRef?.current?.style?.setProperty(
       "--seek-before-width",
-      `${(progressBarRef?.current?.value * 100) / Math.floor(duration)}%`
+      `${(progressBarRef?.current?.value * 100) / duration}%`
     );
 
     playAnimationRef.current = requestAnimationFrame(repeat);
@@ -70,25 +70,20 @@ export default function AudioPlayer({
   }
 
   useEffect(() => {
-    console.log("autoplay", autoPlay, audioRef?.current?.readyState);
-    if (audioRef?.current?.readyState) {
-      progressBarRef.current.max = audioRef?.current?.duration;
-    }
-
-    if (autoPlay) {
-      audioRef?.current?.play();
-      playAnimationRef.current = requestAnimationFrame(repeat);
-      setIsPlaying(true);
-    }
-  }, [src, repeat, autoPlay, audioRef?.current?.readyState]);
-
-  useEffect(() => {
     audioRef.current.muted = isMuted;
   }, [isMuted]);
 
   return (
     <Box>
       <audio
+        onLoadedMetadata={() => {
+          progressBarRef.current.max = Math.floor(audioRef?.current?.duration);
+          if (autoPlay) {
+            audioRef?.current?.play();
+            playAnimationRef.current = requestAnimationFrame(repeat);
+            setIsPlaying(true);
+          }
+        }}
         preload="metadata"
         src={src}
         ref={audioRef}

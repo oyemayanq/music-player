@@ -2,8 +2,8 @@
   --bar-background: #555;
   --seek-before-width: 0px;
   --seek-before-color: #fff;
-  --knobby: #3452a5;
-  --selectedKnobby: #26c9c3;
+  --knobby: #fff;
+  --selectedKnobby: #3452a5;
 
   appearance: none;
   background: var(--bar-background);
