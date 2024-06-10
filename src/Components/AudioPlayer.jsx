@@ -1,4 +1,4 @@
-import "../styles/custom-progress-bar.css";
+import classes from "./audio-player.module.css";
 
 import { useState, useEffect, useRef, useCallback } from "react";
 
@@ -8,6 +8,7 @@ import PauseCircleRoundedIcon from "@mui/icons-material/PauseCircleRounded";
 import SkipPreviousRoundedIcon from "@mui/icons-material/SkipPreviousRounded";
 import SkipNextRoundedIcon from "@mui/icons-material/SkipNextRounded";
 import VolumeUpRoundedIcon from "@mui/icons-material/VolumeUpRounded";
+import VolumeOffRoundedIcon from "@mui/icons-material/VolumeOffRounded";
 import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
 
 export default function AudioPlayer({
@@ -22,7 +23,7 @@ export default function AudioPlayer({
   onEnd,
 }) {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [showVolumeControl, setShowVolumeControl] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
 
   const audioRef = useRef();
   const progressBarRef = useRef();
@@ -33,8 +34,8 @@ export default function AudioPlayer({
     const duration = audioRef?.current?.duration;
     progressBarRef.current.value = currentTime;
     progressBarRef?.current?.style?.setProperty(
-      "--range-progress",
-      `${(currentTime * 100) / duration}`
+      "--seek-before-width",
+      `${(progressBarRef?.current?.value * 100) / Math.floor(duration)}%`
     );
 
     playAnimationRef.current = requestAnimationFrame(repeat);
@@ -42,6 +43,13 @@ export default function AudioPlayer({
 
   function handleProgressChange() {
     audioRef.current.currentTime = progressBarRef?.current?.value;
+    progressBarRef?.current?.style?.setProperty(
+      "--seek-before-width",
+      `${
+        (progressBarRef?.current?.value * 100) /
+        Math.floor(audioRef?.current?.duration)
+      }%`
+    );
   }
 
   function togglePlayPause() {
@@ -62,17 +70,26 @@ export default function AudioPlayer({
   }
 
   useEffect(() => {
+    console.log("autoplay", autoPlay, audioRef?.current?.readyState);
+    if (audioRef?.current?.readyState) {
+      progressBarRef.current.max = audioRef?.current?.duration;
+    }
+
     if (autoPlay) {
-      progressBarRef.current.max = Math.floor(audioRef?.current.duration);
       audioRef?.current?.play();
       playAnimationRef.current = requestAnimationFrame(repeat);
       setIsPlaying(true);
     }
-  }, [src, repeat, autoPlay]);
+  }, [src, repeat, autoPlay, audioRef?.current?.readyState]);
+
+  useEffect(() => {
+    audioRef.current.muted = isMuted;
+  }, [isMuted]);
 
   return (
     <Box>
       <audio
+        preload="metadata"
         src={src}
         ref={audioRef}
         onEnded={() => {
@@ -88,15 +105,21 @@ export default function AudioPlayer({
             onPause();
           }
         }}
+        onPlay={() => {
+          setIsPlaying(true);
+          if (onPlay) {
+            onPlay();
+          }
+        }}
       />
       <Box sx={{ marginBottom: "8px" }}>
         <input
           type="range"
           style={{ width: "100%" }}
           defaultValue="0"
-          max={100}
           ref={progressBarRef}
           onChange={handleProgressChange}
+          className={classes["progress-bar"]}
         />
       </Box>
       <Box
@@ -159,8 +182,13 @@ export default function AudioPlayer({
                 backgroundColor: "#4d4d4d",
               },
             }}
+            onClick={() => setIsMuted(!isMuted)}
           >
-            <VolumeUpRoundedIcon sx={{ fontSize: "20px", color: "#fff" }} />
+            {isMuted ? (
+              <VolumeOffRoundedIcon sx={{ fontSize: "20px", color: "#fff" }} />
+            ) : (
+              <VolumeUpRoundedIcon sx={{ fontSize: "20px", color: "#fff" }} />
+            )}
           </IconButton>
         </Box>
       </Box>
