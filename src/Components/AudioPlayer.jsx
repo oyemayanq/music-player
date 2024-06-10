@@ -41,9 +41,7 @@ export default function AudioPlayer({
   }, [audioRef, progressBarRef]);
 
   function handleProgressChange() {
-    const currentAudioTime =
-      (audioRef?.current?.duration * progressBarRef?.current?.value) / 100;
-    audioRef.current.currentTime = currentAudioTime / 100;
+    audioRef.current.currentTime = progressBarRef?.current?.value;
   }
 
   function togglePlayPause() {
@@ -65,7 +63,7 @@ export default function AudioPlayer({
 
   useEffect(() => {
     if (autoPlay) {
-      progressBarRef.current.max = audioRef?.current.duration;
+      progressBarRef.current.max = Math.floor(audioRef?.current.duration);
       audioRef?.current?.play();
       playAnimationRef.current = requestAnimationFrame(repeat);
       setIsPlaying(true);
